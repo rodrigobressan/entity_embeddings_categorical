@@ -1,0 +1,24 @@
+sudo: required
+env:
+language: python
+python:
+- '3.6'
+cache: pip
+before_install:
+- sudo apt-get update
+install:
+- pip install -r requirements.txt
+- pip install pytest pytest-cov
+- pip install coveralls
+script: py.test --doctest-modules --cov
+after_success:
+- coveralls
+deploy:
+  provider: pypi
+  user: bresan
+  distributions: sdist bdist_wheel
+  on:
+    branch: master
+  skip_existing: true
+  password:
+    secure: ONqTu2wEmuMZWitJprAFCu4+dLU9RnNcDOZJSrZcbsdZFtyfcEoQ3+oOSEDhCZtiJZI4UGv2/x6nVRD0pDmER+dYIOREL3eU46JFDp113Uv4w9FO3+IswnktKdJz6aHubPNarBG7LGu4BF24pHY0jmmtrpCydg+9ltpOJemNOcwOffc0t43QmVwA3Nnvmq0Pgi4TEJTA4EblC98fi9yiFGx33yk37NS3oibb+dEOyLIhW6WR7G8FlWAsdz4S/TOCVNilrPUQDsXXi5x5oqQKXPlU+aJzJauS7AtrTTZO3FsCmyjMMuHJ20e7hYtSC/dMCPc10efmQ6GoX8XWtIzYQbG0tNSn+rDzqVkgx1YIgaJze51YMQ4ZOJx/dn6u6427loLYVAg6NX5sRzu3yOscXqHqJtDPCKuLyKxsbZ3lVs3qrd/GqmGLUsmuWQCNq1ineNX3wuAuU7bCi7majWB/qxyMKEW5hW/LUbge4FTvgQ1boQpeof50xZNifxJMjqYOTIvfIEOH3wcDD1cPAIQaq19Zf6t9Ur7fvl4AHfcxyibRi55hafd6Xmt7ERgQHOwAe4H8Kow8zyYSCbpJ1JiwYFHw+H3rtxjaciQgB403oPG1eJlWnaOXITpqTw7PNeo0WpWTT0ITiAASKU/fniZ8zsaTFTNi11yC3aru/zzq2Oc=
