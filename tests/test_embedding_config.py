@@ -6,7 +6,7 @@ import pandas as pd
 from EmbeddingConfig import EmbeddingConfig, get_embedding_size
 
 
-class EmbeddingConfigTest(unittest.TestCase):
+class TestEmbeddingConfig(unittest.TestCase):
     def test_init_with_empty_dataframe(self):
         df_empty = pd.DataFrame()
         target = 'cat_a'
