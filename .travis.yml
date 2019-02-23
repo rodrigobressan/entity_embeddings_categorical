@@ -10,7 +10,10 @@ install:
 - pip install -r requirements.txt
 - pip install pytest pytest-cov
 - pip install coveralls
-script: py.test --doctest-modules --cov
+- pip install mypy
+script:
+- py.test --doctest-modules --cov
+- mypy ./ --ignore-missing-imports
 after_success:
 - coveralls
 deploy:
