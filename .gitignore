@@ -261,3 +261,5 @@ fabric.properties
 .DS_Store
 
 *.pickle
+
+*.csv
