@@ -36,7 +36,7 @@ def get_X_y(df: pd.DataFrame, name_target: str) -> Tuple[List, List]:
     y_list = []
 
     for index, record in df.iterrows():
-        fl = series_to_list(record)
+        fl = series_to_list(record.drop(name_target))
         X_list.append(fl)
         y_list.append(int(record[name_target]))
 
@@ -58,20 +58,14 @@ def label_encode(data: List) -> np.ndarray:
     return data_encoded
 
 
-def transpose_to_list(X: np.ndarray, keep_last_column: bool = False) -> List[np.ndarray]:
+def transpose_to_list(X: np.ndarray) -> List[np.ndarray]:
     """
     :param X: the ndarray to be used as source
-    :param keep_last_column: boolean if the last column should also be added to the list
     :return: a list of nd.array containing the elements from the numpy array
     """
 
-    if keep_last_column:
-        total = X.shape[1]
-    else:
-        total = X.shape[1] - 1
-
     features_list = []
-    for index in range(total):
+    for index in range(X.shape[1]):
         features_list.append(X[..., [index]])
 
     return features_list

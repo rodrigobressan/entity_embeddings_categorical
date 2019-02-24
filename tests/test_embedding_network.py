@@ -1,35 +1,35 @@
 import unittest
-from typing import List
 
-import numpy as np
-import pandas as pd
 from keras.layers import Embedding
 
-from entity_embeddings.EmbeddingConfig import EmbeddingConfig, get_embedding_size, Category
+from entity_embeddings.EmbeddingConfig import EmbeddingConfig, get_embedding_size
 from entity_embeddings.EmbeddingNetwork import EmbeddingNetwork
-from entity_embeddings.EmbeddingNetwork import transpose_to_list
+from entity_embeddings.processor.TargetType import TargetType
+from entity_embeddings.util.DataframeUtils import create_random_csv, remove_random_csv
 
 
 class EmbeddingNetworkTest(unittest.TestCase):
     def test_model_embedding_size(self):
-        df = pd.DataFrame(np.random.randint(0, 10, size=(10, 4)), columns=list('ABCD'))
+
+        random_csv = create_random_csv()
         target = 'D'
 
-        config = EmbeddingConfig(df, target)
+        config = EmbeddingConfig(csv_path=random_csv,
+                                 target_name=target,
+                                 target_type=TargetType.BINARY_CLASSIFICATION,
+                                 train_ratio=0.9)
 
-        network = EmbeddingNetwork(config, epochs=1)
+        network = EmbeddingNetwork(config)
 
         for layer in network.model.layers:
             if type(layer) is Embedding:
                 embedding_size = int(layer.embeddings.initial_value.shape[1])
-                self.assertEqual(get_embedding_size(df[layer.name].nunique()), embedding_size)
+                self.assertEqual(get_embedding_size(config.df[layer.name].nunique()), embedding_size)
 
+        remove_random_csv()
 
-    def test_model_regression(self):
+    def test_output_for_regression(self):
         pass
 
-    def test_model_binary_classification(self):
-        pass
-
-    def test_model_others(self):
+    def test_output_for_binary_classification(self):
         pass

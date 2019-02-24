@@ -5,7 +5,11 @@ categories. This data will be later on used on our EmbeddingNetwork class.
 from typing import List
 
 import numpy as np
-import pandas as pd
+
+from entity_embeddings.processor.TargetType import TargetType
+from entity_embeddings.util.DataframeUtils import load_guarantee_not_empty
+from entity_embeddings.util.ProcessorUtils import get_processor
+from entity_embeddings.util.ValidationUtils import *
 
 
 def get_embedding_size(unique_values: int) -> int:
@@ -16,6 +20,15 @@ def get_embedding_size(unique_values: int) -> int:
     """
     return int(min(np.ceil(unique_values / 2), 50))
 
+
+def generate_categories_from_df(df: pd.DataFrame, target_name: str):
+    category_list = []
+
+    for category in df:
+        if not category == target_name:
+            category_list.append(Category(category, df[category].nunique()))
+
+    return category_list
 
 class Category:
     """
@@ -30,60 +43,38 @@ class Category:
 
 class EmbeddingConfig:
     """
-    This class is used to store all the categories which will be used on our Embeddings Network
+    This class is used to store all the configuration (dataframes, target type, epochs, artifacts..) which will be
+    used on our Embeddings Network
     """
 
-    def __init__(self, df: pd.DataFrame, target_var: str):
-        self.validate_inputs(df, target_var)
+    def __init__(self,
+                 csv_path: str,
+                 target_name: str,
+                 target_type: TargetType,
+                 train_ratio: float,
+                 epochs: int = 10,
+                 batch_size: int = 128,
+                 verbose: bool = False,
+                 weights_output: str = 'weights_embeddings.pickle'):
+        # input validations
+        check_csv_data(csv_path)
+        check_target_name(target_name)
+        check_train_ratio(train_ratio)
+        check_epochs(epochs)
+        check_batch_size(batch_size)
+        check_weights_output(weights_output)
 
-        self.categories: List[Category] = []
-        self.target_var = target_var
+        self.csv_path = csv_path
+        self.target_name = target_name
+        self.target_type = target_type
+        self.train_ratio = train_ratio
+        self.epochs = epochs
+        self.batch_size = batch_size
+        self.verbose = verbose
+        self.weights_output = weights_output
+        self.processor = get_processor(target_type)
 
-        for category in df:
-            if not category == target_var:
-                self.add_category(Category(category, df[category].nunique()))
+        self.df = load_guarantee_not_empty(self.csv_path)
+        check_target_existent_in_df(self.target_name, self.df)
 
-    def add_category(self, category: Category) -> None:
-        """
-        Method to add a new category
-        :param category: the category to be added
-        """
-        self.categories.append(category)
-
-    def validate_inputs(self, df: pd.DataFrame, target_var: str) -> None:
-        """
-        Method used to validate the received initialization inputs
-        :param df: the dataframe to be used
-        :param target_var: the name of the target variable
-        """
-        self.check_not_empty_dataframe(df)
-        self.check_not_empty_target_var(target_var)
-        self.check_target_in_df(df, target_var)
-
-    @staticmethod
-    def check_not_empty_dataframe(df: pd.DataFrame) -> None:
-        """
-        Used to check if the received dataframe is not empty
-        :param df:
-        """
-        if df.empty:
-            raise ValueError("You should provide a non-empty pandas dataframe")
-
-    @staticmethod
-    def check_not_empty_target_var(target_var: str) -> None:
-        """
-        Used to check if the target var is not empty
-        :param target_var:
-        """
-        if not target_var:
-            raise ValueError("You should provide a not null target var")
-
-    @staticmethod
-    def check_target_in_df(df: pd.DataFrame, target_var: str) -> None:
-        """
-        Used to check if the passed target var exists in the dataframe
-        :param df: the dataframe to be used
-        :param target_var: the target/y var name
-        """
-        if target_var not in df.columns:
-            raise ValueError("You should provide a target variable that is existent on the dataframe")
+        self.categories: List[Category] = generate_categories_from_df(self.df, self.target_name)

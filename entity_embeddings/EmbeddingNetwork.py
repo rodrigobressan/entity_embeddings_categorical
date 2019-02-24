@@ -12,7 +12,7 @@ from keras.layers.embeddings import Embedding
 from keras.models import Model as KerasModel
 
 from entity_embeddings.EmbeddingConfig import EmbeddingConfig
-from entity_embeddings.PreprocessingUtils import transpose_to_list
+from entity_embeddings.util.PreprocessingUtils import transpose_to_list
 
 np.random.seed(42)
 
@@ -22,10 +22,9 @@ class EmbeddingNetwork:
     This class is used to provide a Entity Embedding Network from a given EmbeddingConfig object
     """
 
-    def __init__(self, config: EmbeddingConfig, epochs: int = 10):
+    def __init__(self, config: EmbeddingConfig):
         super().__init__()
         self.config = config
-        self.epochs = epochs
         self.model = self.__make_model()
 
     def __make_model(self) -> KerasModel:
@@ -77,6 +76,9 @@ class EmbeddingNetwork:
         """
         self.model.fit(transpose_to_list(X_train), y_train,
                        validation_data=(transpose_to_list(X_val), y_val),
-                       epochs=self.epochs, batch_size=128,
+                       epochs=self.config.epochs, batch_size=self.config.batch_size,
                        # callbacks=[self.checkpointer],
                        )
+
+    def get_weights_from_layer(self, layer_name):
+        return self.model.get_layer(layer_name).get_weights()[0]
