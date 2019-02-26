@@ -15,6 +15,9 @@ def read_file(*file_name: str) -> str:
         return f.read()
 
 
+with open('requirements.txt') as f:
+    requirements = f.read().splitlines()
+
 setup(
     name='entity_embeddings_categorical',
     version='0.3',
@@ -35,5 +38,6 @@ setup(
         'console_scripts': [
             'hello = app.__main__:main',
         ]
-    }
+    },
+    install_requires=requirements
 )
