@@ -8,7 +8,7 @@ import numpy as np
 
 from entity_embeddings.processor.TargetType import TargetType
 from entity_embeddings.util.DataframeUtils import load_guarantee_not_empty
-from entity_embeddings.util.ProcessorUtils import get_processor
+from entity_embeddings.util.ProcessorUtils import get_target_processor
 from entity_embeddings.util.ValidationUtils import *
 
 
@@ -29,6 +29,7 @@ def generate_categories_from_df(df: pd.DataFrame, target_name: str):
             category_list.append(Category(category, df[category].nunique()))
 
     return category_list
+
 
 class Category:
     """
@@ -72,9 +73,10 @@ class EmbeddingConfig:
         self.batch_size = batch_size
         self.verbose = verbose
         self.weights_output = weights_output
-        self.processor = get_processor(target_type)
+        self.target_processor = get_target_processor(target_type)
 
         self.df = load_guarantee_not_empty(self.csv_path)
         check_target_existent_in_df(self.target_name, self.df)
 
+        self.unique_classes = self.df[self.target_name].nunique()
         self.categories: List[Category] = generate_categories_from_df(self.df, self.target_name)

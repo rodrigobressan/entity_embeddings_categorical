@@ -4,3 +4,4 @@ class TargetType:
     """
     REGRESSION = 0
     BINARY_CLASSIFICATION = 1
+    MULTICLASS_CLASSIFICATION = 2
