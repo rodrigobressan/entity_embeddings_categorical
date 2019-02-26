@@ -20,7 +20,7 @@ with open('requirements.txt') as f:
 
 setup(
     name='entity_embeddings_categorical',
-    version='0.3',
+    version='0.4',
     license='BSD-3-Clause',
     url='https://github.com/bresan/entity_embeddings_categorical',
     description='',
