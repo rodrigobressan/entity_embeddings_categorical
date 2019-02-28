@@ -3,7 +3,7 @@ import unittest
 import numpy as np
 import pandas as pd
 
-from entity_embeddings.EmbeddingConfig import EmbeddingConfig, get_embedding_size
+from entity_embeddings.config import Config, get_embedding_size
 
 
 class TestEmbeddingConfig(unittest.TestCase):

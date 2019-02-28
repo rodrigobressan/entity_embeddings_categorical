@@ -1,11 +1,9 @@
-from entity_embeddings.processor import BaseProcessor
-from entity_embeddings.processor.BinaryClassificationProcessor import BinaryClassificationProcessor
-from entity_embeddings.processor.MulticlassClassificationProcessor import MulticlassClassificationProcessor
-from entity_embeddings.processor.RegressionProcessor import RegressionProcessor
-from entity_embeddings.processor.TargetType import TargetType
+from entity_embeddings.processor import processor, RegressionProcessor, MulticlassClassificationProcessor, \
+    BinaryClassificationProcessor
+from entity_embeddings.processor.target_type import TargetType
 
 
-def get_target_processor(type: int) -> BaseProcessor:
+def get_target_processor(type: int) -> processor:
     """
     This method is used to get a target processor from a given target type
     :param type:

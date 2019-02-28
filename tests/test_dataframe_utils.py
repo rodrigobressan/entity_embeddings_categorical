@@ -3,9 +3,9 @@ import unittest
 
 import pandas as pd
 
-from entity_embeddings.util.DataframeUtils import create_random_dataframe, create_random_csv, remove_random_csv, \
+from entity_embeddings.util.dataframe_utils import create_random_dataframe, create_random_csv, remove_random_csv, \
     get_all_columns_except
-from entity_embeddings.util.ValidationUtils import check_not_empty_dataframe
+from entity_embeddings.util.validation_utils import check_not_empty_dataframe
 
 
 class TestDataframeUtils(unittest.TestCase):

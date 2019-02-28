@@ -2,8 +2,8 @@ import unittest
 
 import pandas as pd
 
-from entity_embeddings.util import DataframeUtils
-from entity_embeddings.util.ValidationUtils import check_csv_data, check_not_empty_dataframe, check_target_name, \
+from entity_embeddings.util import dataframe_utils
+from entity_embeddings.util.validation_utils import check_csv_data, check_not_empty_dataframe, check_target_name, \
     check_target_existent_in_df, check_train_ratio, check_epochs, check_batch_size, check_weights_output
 
 
@@ -25,7 +25,7 @@ class TestValidationUtils(unittest.TestCase):
         self.assertRaises(ValueError, check_target_name, target_name)
 
     def test_check_target_existent_in_df(self) -> None:
-        df = DataframeUtils.create_random_dataframe(columns='ABCD')
+        df = dataframe_utils.create_random_dataframe(columns='ABCD')
         self.assertRaises(ValueError, check_target_existent_in_df, 'E', df)
 
     def test_check_train_ratio_greater_than_one(self) -> None:

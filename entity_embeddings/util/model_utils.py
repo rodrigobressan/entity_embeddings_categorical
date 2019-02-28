@@ -4,14 +4,14 @@ from keras import Model
 from keras.engine import Layer
 from keras.layers import Dense, Activation
 
-from entity_embeddings import EmbeddingConfig
-from entity_embeddings.processor.TargetType import TargetType
-from entity_embeddings.util import DataframeUtils
+from entity_embeddings import config
+from entity_embeddings.processor.target_type import TargetType
+from entity_embeddings.util import dataframe_utils
 
 
-def save_weights(model: Model, config: EmbeddingConfig) -> None:
+def save_weights(model: Model, config: config) -> None:
     weights_embeddings = []
-    for column in DataframeUtils.get_all_columns_except(config.df, config.target_name):
+    for column in dataframe_utils.get_all_columns_except(config.df, config.target_name):
         weights = get_weights_from_layer(model, column)
         weights_embeddings.append(weights)
 

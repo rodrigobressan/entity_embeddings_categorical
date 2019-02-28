@@ -1,0 +1,1 @@
+from entity_embeddings.network.network import EmbeddingNetwork

@@ -6,10 +6,10 @@ from typing import List
 
 import numpy as np
 
-from entity_embeddings.processor.TargetType import TargetType
-from entity_embeddings.util.DataframeUtils import load_guarantee_not_empty
-from entity_embeddings.util.ProcessorUtils import get_target_processor
-from entity_embeddings.util.ValidationUtils import *
+from entity_embeddings.processor.target_type import TargetType
+from entity_embeddings.util.dataframe_utils import load_guarantee_not_empty
+from entity_embeddings.util.processor_utils import get_target_processor
+from entity_embeddings.util.validation_utils import *
 
 
 def get_embedding_size(unique_values: int) -> int:
@@ -42,7 +42,7 @@ class Category:
         self.embedding_size = get_embedding_size(unique_values)
 
 
-class EmbeddingConfig:
+class Config:
     """
     This class is used to store all the configuration (dataframes, target type, epochs, artifacts..) which will be
     used on our Embeddings Network

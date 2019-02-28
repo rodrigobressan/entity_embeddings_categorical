@@ -4,7 +4,7 @@ import shutil
 import numpy as np
 import pandas as pd
 
-from entity_embeddings.util.ValidationUtils import check_not_empty_dataframe
+from entity_embeddings.util.validation_utils import check_not_empty_dataframe
 
 
 def load_guarantee_not_empty(csv_path) -> pd.DataFrame:

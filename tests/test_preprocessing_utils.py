@@ -2,8 +2,8 @@ import unittest
 
 import numpy as np
 
-from entity_embeddings.util import DataframeUtils
-from entity_embeddings.util.PreprocessingUtils import transpose_to_list, series_to_list, get_X_y
+from entity_embeddings.util import dataframe_utils
+from entity_embeddings.util.preprocessing_utils import transpose_to_list, series_to_list, get_X_y
 
 
 class TestPreprocessingUtils(unittest.TestCase):
@@ -16,14 +16,14 @@ class TestPreprocessingUtils(unittest.TestCase):
         self.__check_items(X_array, feature_list)
 
     def test_series_to_list(self):
-        df = DataframeUtils.create_random_dataframe(rows=5, cols=5, columns='ABCDE')
+        df = dataframe_utils.create_random_dataframe(rows=5, cols=5, columns='ABCDE')
 
         for row in df.iterrows():
             output_list = series_to_list(row)
             self.assertListEqual(row[1].values.tolist(), output_list[1].values.tolist())
 
     def test_get_X_y(self):
-        df = DataframeUtils.create_random_dataframe(rows=5, cols=5, columns='ABCDE')
+        df = dataframe_utils.create_random_dataframe(rows=5, cols=5, columns='ABCDE')
         target = 'E'
 
         X_list, y_list = get_X_y(df, target)
