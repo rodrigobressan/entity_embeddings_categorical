@@ -42,16 +42,15 @@ class TestConfig(unittest.TestCase):
         self.assertIsNotNone(config)
         remove_random_csv()
 
+    def test_embedding_size(self):
+        embedding_1 = get_embedding_size(10)
+        self.assertEqual(embedding_1, 5)
 
-def test_embedding_size(self):
-    embedding_1 = get_embedding_size(10)
-    self.assertEqual(embedding_1, 5)
+        embedding_2 = get_embedding_size(15)
+        self.assertEqual(embedding_2, 8)
 
-    embedding_2 = get_embedding_size(15)
-    self.assertEqual(embedding_2, 8)
-
-    embedding_3 = get_embedding_size(20)
-    self.assertEqual(embedding_3, 10)
+        embedding_3 = get_embedding_size(20)
+        self.assertEqual(embedding_3, 10)
 
 
 @staticmethod
