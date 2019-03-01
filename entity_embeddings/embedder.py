@@ -3,14 +3,14 @@ from typing import Tuple
 import numpy as np
 
 from entity_embeddings.config import Config
-from entity_embeddings.network import EmbeddingNetwork
+from entity_embeddings.network.network import EmbeddingNetwork
 from entity_embeddings.util import model_utils, preprocessing_utils
 
 
 class Embedder():
     def __init__(self, config: Config):
         self.config = config
-        self.X_train, self.X_val, self.y_train, self.y_val = self.prepare_data(self.config)
+        self.network = EmbeddingNetwork(config)
 
     def prepare_data(self, config: Config) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
         X, y = preprocessing_utils.get_X_y(config.df, config.target_name)
@@ -35,7 +35,7 @@ class Embedder():
         return X_train, X_val, y_train, y_val
 
     def perform_embedding(self) -> None:
-        network = EmbeddingNetwork(self.config)
-        network.fit(self.X_train, self.y_train, self.X_val, self.y_val)
+        self.X_train, self.X_val, self.y_train, self.y_val = self.prepare_data(self.config)
+        self.network.fit(self.X_train, self.y_train, self.X_val, self.y_val)
 
-        model_utils.save_weights(network.model, self.config)
+        model_utils.save_weights(self.network.model, self.config)

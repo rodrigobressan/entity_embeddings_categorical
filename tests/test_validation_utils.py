@@ -4,7 +4,8 @@ import pandas as pd
 
 from entity_embeddings.util import dataframe_utils
 from entity_embeddings.util.validation_utils import check_csv_data, check_not_empty_dataframe, check_target_name, \
-    check_target_existent_in_df, check_train_ratio, check_epochs, check_batch_size, check_weights_output
+    check_target_existent_in_df, check_train_ratio, check_epochs, check_batch_size, check_weights_output, \
+    check_target_processor, check_model_assembler
 
 
 class TestValidationUtils(unittest.TestCase):
@@ -55,3 +56,11 @@ class TestValidationUtils(unittest.TestCase):
     def test_check_weights_output(self) -> None:
         weights_output = ''
         self.assertRaises(ValueError, check_weights_output, weights_output)
+
+    def test_check_target_processor(self) -> None:
+        invalid_processor = ()
+        self.assertRaises(ValueError, check_target_processor, invalid_processor)
+
+    def test_check_model_assembler(self) -> None:
+        invalid_assembler = ()
+        self.assertRaises(ValueError, check_model_assembler, invalid_assembler)

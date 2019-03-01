@@ -3,21 +3,21 @@ import unittest
 from keras.layers import Embedding
 
 from entity_embeddings.config import Config, get_embedding_size
-from entity_embeddings.network import EmbeddingNetwork
+from entity_embeddings.network.network import EmbeddingNetwork
 from entity_embeddings.processor.target_type import TargetType
 from entity_embeddings.util.dataframe_utils import create_random_csv, remove_random_csv
 
 
-class EmbeddingNetworkTest(unittest.TestCase):
+class TestNetwork(unittest.TestCase):
     def test_model_embedding_size(self):
 
         random_csv = create_random_csv()
         target = 'D'
 
-        config = Config(csv_path=random_csv,
-                        target_name=target,
-                        target_type=TargetType.BINARY_CLASSIFICATION,
-                        train_ratio=0.9)
+        config = Config.make_default_config(csv_path=random_csv,
+                                            target_name=target,
+                                            target_type=TargetType.BINARY_CLASSIFICATION,
+                                            train_ratio=0.9)
 
         network = EmbeddingNetwork(config)
 

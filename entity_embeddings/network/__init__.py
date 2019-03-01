@@ -1,1 +1,1 @@
-from entity_embeddings.network.network import EmbeddingNetwork
+from entity_embeddings.network.assembler import ModelAssembler

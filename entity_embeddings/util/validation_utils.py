@@ -2,6 +2,11 @@ import os
 
 import pandas as pd
 
+# from entity_embeddings.network.assembler import ModelAssembler
+# from entity_embeddings.processor.processor import TargetProcessor
+from entity_embeddings.network import ModelAssembler
+from entity_embeddings.processor.processor import TargetProcessor
+
 
 def check_csv_data(csv_path: str) -> None:
     if not csv_path:
@@ -44,3 +49,11 @@ def check_batch_size(batch_size: int) -> None:
 def check_weights_output(weights_output: str) -> None:
     if not weights_output:
         raise ValueError("You should provide a output file for the embeddings weights")
+
+def check_target_processor(processor: TargetProcessor) -> None:
+    if not isinstance(processor, TargetProcessor):
+        raise ValueError("You should provide a target processor that inherits from TargetProcessor")
+
+def check_model_assembler(assembler: ModelAssembler) -> None:
+    if not isinstance(assembler, ModelAssembler):
+        raise ValueError("You should provide a model assembler that inherits from ModelAssembler")

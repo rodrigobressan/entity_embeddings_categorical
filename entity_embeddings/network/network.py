@@ -12,7 +12,6 @@ from keras.layers import Dense, Activation
 from keras.models import Model as KerasModel
 
 from entity_embeddings.config import Config
-from entity_embeddings.network.assembler import get_assembler
 from entity_embeddings.util.preprocessing_utils import transpose_to_list
 
 np.random.seed(42)
@@ -26,7 +25,6 @@ class EmbeddingNetwork:
     def __init__(self, config: Config):
         super().__init__()
         self.config = config
-        self.assembler = get_assembler(config)
         self.model = self.__make_model()
 
     def __make_model(self) -> KerasModel:
@@ -36,21 +34,13 @@ class EmbeddingNetwork:
         """
 
         inputs, outputs = self._make_embedding_layers()
-        output_model = self._make_hidden_layers(outputs)
-
-        output_model = self.assembler.make_final_layer(output_model)
+        output_model = self.config.model_assembler.make_hidden_layers(outputs)
+        output_model = self.config.model_assembler.make_final_layer(output_model)
 
         model = KerasModel(inputs=inputs, outputs=output_model)
-        model = self.assembler.compile_model(model)
+        model = self.config.model_assembler.compile_model(model)
         return model
 
-    def _make_hidden_layers(self, outputs) -> Layer:
-        output_model = Concatenate()(outputs)
-        output_model = Dense(1000, kernel_initializer="uniform")(output_model)
-        output_model = Activation('relu')(output_model)
-        output_model = Dense(500, kernel_initializer="uniform")(output_model)
-        output_model = Activation('relu')(output_model)
-        return output_model
 
     def _make_embedding_layers(self) -> Tuple[List[Layer], List[Layer]]:
         """

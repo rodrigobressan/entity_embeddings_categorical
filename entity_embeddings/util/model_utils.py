@@ -21,4 +21,3 @@ def save_weights(model: Model, config: config) -> None:
 
 def get_weights_from_layer(model, layer_name):
     return model.get_layer(layer_name).get_weights()[0]
-

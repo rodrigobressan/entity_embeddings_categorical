@@ -15,12 +15,9 @@ def read_file(*file_name: str) -> str:
         return f.read()
 
 
-with open('requirements.txt') as f:
-    requirements = f.read().splitlines()
-
 setup(
     name='entity_embeddings_categorical',
-    version='0.4',
+    version='0.5',
     license='BSD-3-Clause',
     url='https://github.com/bresan/entity_embeddings_categorical',
     description='',
@@ -39,5 +36,5 @@ setup(
             'hello = app.__main__:main',
         ]
     },
-    install_requires=requirements
+    install_requires=read_file('requirements.txt')
 )

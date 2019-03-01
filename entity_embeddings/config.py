@@ -6,6 +6,8 @@ from typing import List
 
 import numpy as np
 
+from entity_embeddings.network.assembler import ModelAssembler, get_model_assembler
+from entity_embeddings.processor.processor import TargetProcessor
 from entity_embeddings.processor.target_type import TargetType
 from entity_embeddings.util.dataframe_utils import load_guarantee_not_empty
 from entity_embeddings.util.processor_utils import get_target_processor
@@ -51,8 +53,9 @@ class Config:
     def __init__(self,
                  csv_path: str,
                  target_name: str,
-                 target_type: TargetType,
                  train_ratio: float,
+                 target_processor: TargetProcessor,
+                 model_assembler: ModelAssembler,
                  epochs: int = 10,
                  batch_size: int = 128,
                  verbose: bool = False,
@@ -65,18 +68,71 @@ class Config:
         check_batch_size(batch_size)
         check_weights_output(weights_output)
 
+        check_target_processor(target_processor)
+        check_model_assembler(model_assembler)
+        # TODO check processor and assembler
+
         self.csv_path = csv_path
         self.target_name = target_name
-        self.target_type = target_type
         self.train_ratio = train_ratio
         self.epochs = epochs
         self.batch_size = batch_size
         self.verbose = verbose
         self.weights_output = weights_output
-        self.target_processor = get_target_processor(target_type)
+        self.target_processor = target_processor
+        self.model_assembler = model_assembler
 
         self.df = load_guarantee_not_empty(self.csv_path)
         check_target_existent_in_df(self.target_name, self.df)
 
         self.unique_classes = self.df[self.target_name].nunique()
+
         self.categories: List[Category] = generate_categories_from_df(self.df, self.target_name)
+
+    @classmethod
+    def make_default_config(cls,
+                            csv_path: str,
+                            target_name: str,
+                            target_type: TargetType,
+                            train_ratio: float,
+                            epochs: int = 10,
+                            batch_size: int = 128,
+                            verbose: bool = False,
+                            weights_output: str = 'weights_embeddings.pickle'):
+        df = load_guarantee_not_empty(csv_path)
+        check_target_existent_in_df(target_name, df)
+        n_unique_classes = df[target_name].nunique()
+
+        target_processor = get_target_processor(target_type)
+        model_assembler = get_model_assembler(target_type, n_unique_classes)
+
+        return cls(csv_path,
+                   target_name,
+                   train_ratio,
+                   target_processor,
+                   model_assembler,
+                   epochs,
+                   batch_size,
+                   verbose,
+                   weights_output)
+
+    @classmethod
+    def make_custom_config(cls,
+                           csv_path: str,
+                           target_name: str,
+                           train_ratio: float,
+                           target_processor: TargetProcessor,
+                           model_assembler: ModelAssembler,
+                           epochs: int = 10,
+                           batch_size: int = 128,
+                           verbose: bool = False,
+                           weights_output: str = 'weights_embeddings.pickle'):
+        return cls(csv_path,
+                   target_name,
+                   train_ratio,
+                   target_processor,
+                   model_assembler,
+                   epochs,
+                   batch_size,
+                   verbose,
+                   weights_output)
