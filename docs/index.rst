@@ -5,8 +5,6 @@
 
 Welcome to Entity Embeddings's documentation!
 =============================================
-.. automodule:: entity_embeddings.config
-    :members:
 
 .. toctree::
    :maxdepth: 2
