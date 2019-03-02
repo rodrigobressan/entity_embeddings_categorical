@@ -22,7 +22,7 @@ class TestNetwork(unittest.TestCase):
         network = EmbeddingNetwork(config)
 
         for layer in network.model.layers:
-            if type(layer) is Embedding:
+            if isinstance(layer, Embedding):
                 embedding_size = int(layer.embeddings.initial_value.shape[1])
                 self.assertEqual(get_embedding_size(config.df[layer.name].nunique()), embedding_size)
 

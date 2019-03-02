@@ -23,11 +23,8 @@ If your data type differs from any of these, you can feel free to use the custom
 
 ## Default mode
 
-The usage of the default mode is pretty straightforward, you just need to input a few parameters:
-- csv_path: csv location with both features and targets (string);
-- target_type: REGRESSION, BINARY_CLASSIFICATION or MULTICLASS_CLASSIFICATION (please refer to [TargetType](https://github.com/bresan/entity_embeddings_categorical/blob/master/entity_embeddings/processor/target_type.py))
-- target_name: target/predictor name on the csv file (string);
-- train_ratio: the ratio adopted for the training (float);
+
+The usage of the default mode is pretty straightforward, you just need to provide a few parameters to the Config object:
 
 So for creating a simple embedding network that reads from file **sales_last_semester.csv**, where the target name is **total_sales**, with the desired output being a **binary classification** and with a training ratio of **0.9**, our Python script would look like this:
 
@@ -42,23 +39,31 @@ So for creating a simple embedding network that reads from file **sales_last_sem
     embedder.perform_embedding()
 ```
 
-A working example of default mode can be found [here as a Python script](https://github.com/bresan/entity_embeddings_categorical/blob/master/example/default/default_config_example.py) and [here as a Jupyter Notebook]().
+Pretty simple, huh?
+
+A working example of default mode can be found [here as a Python script](https://github.com/bresan/entity_embeddings_categorical/blob/master/example/default/default_config_example.py).
 
 ## Custom mode
 
 If you intend to customize the output of the Neural Network or even the way that the target variables are processed, you need to specify these when creating the configuration object.
-This can be done by creating a class that extend from [TargetProcessor](https://github.com/bresan/entity_embeddings_categorical/blob/master/entity_embeddings/processor/processor.py) and [ModelAssembler](https://github.com/bresan/entity_embeddings_categorical/blob/master/entity_embeddings/network/assembler.py)].
+This can be done by creating a class that extend from [TargetProcessor](https://github.com/bresan/entity_embeddings_categorical/blob/master/entity_embeddings/processor/processor.py) and [ModelAssembler](https://github.com/bresan/entity_embeddings_categorical/blob/master/entity_embeddings/network/assembler.py).
 
 A working example of custom configuration mode can be found [here](https://github.com/bresan/entity_embeddings_categorical/blob/master/example/custom/custom_config_example.py).
 
-# Visualization
+## Visualization
 
 To-DO;
+
+# Documentation
+
+
+
+# Testing
+
+This project is inteded to be highly flexible to all the existent needs, so for this reason, testability is a major concern. Most of the code is heavily tested, along with [Travis](https://travis-ci.org/bresan/entity_embeddings_categorical) as Continuous Integration tool to run all the unit tests once there is a new commit.
 
 To-Do:
 
 - Notebok sample;
-- Custom target;
-- MyPy;
 - Visualization;
 - Draw CNN;

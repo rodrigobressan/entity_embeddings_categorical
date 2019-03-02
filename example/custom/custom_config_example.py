@@ -1,20 +1,20 @@
 from typing import List
 
 import numpy as np
+import pandas as pd
 from keras.engine import Layer
 from keras.layers import Dense, Activation, Concatenate
-from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import MinMaxScaler
 
-from entity_embeddings.config import Config
-from entity_embeddings.embedder import Embedder
+from entity_embeddings import Config, Embedder
 from entity_embeddings.network import ModelAssembler
-from entity_embeddings.processor.processor import TargetProcessor
+from entity_embeddings.processor import TargetProcessor
 
 
 class CustomProcessor(TargetProcessor):
     def process_target(self, y: List) -> np.ndarray:
-        # just for example purposes, let's use a LabelEncoder
-        return LabelEncoder().fit_transform(y)
+        # just for example purposes, let's use a MinMaxScaler
+        return MinMaxScaler().fit_transform(pd.DataFrame(y))
 
 
 class CustomAssembler(ModelAssembler):
@@ -24,7 +24,7 @@ class CustomAssembler(ModelAssembler):
         return output_model
 
     def compile_model(self, model):
-        model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+        model.compile(loss='mean_absolute_error', optimizer='adam')
         return model
 
     """
@@ -44,9 +44,9 @@ def main():
     custom_processor = CustomProcessor()
     custom_assembler = CustomAssembler()
 
-    data_path = "../mock_categorical.csv"
+    data_path = "../rossmann.csv"
     config = Config.make_custom_config(csv_path=data_path,
-                                       target_name='vivo',
+                                       target_name='Sales',
                                        train_ratio=0.9,
                                        target_processor=custom_processor,
                                        model_assembler=custom_assembler,
