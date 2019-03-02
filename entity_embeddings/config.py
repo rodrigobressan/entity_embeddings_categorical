@@ -6,8 +6,7 @@ from typing import List
 
 import numpy as np
 
-from entity_embeddings.network.assembler import ModelAssembler, get_model_assembler
-from entity_embeddings.processor.processor import TargetProcessor
+from entity_embeddings.network.assembler import get_model_assembler
 from entity_embeddings.processor.target_type import TargetType
 from entity_embeddings.util.dataframe_utils import load_guarantee_not_empty
 from entity_embeddings.util.processor_utils import get_target_processor

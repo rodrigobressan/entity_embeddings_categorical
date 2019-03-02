@@ -60,7 +60,7 @@ To-DO;
 
 # Testing
 
-This project is inteded to be highly flexible to all the existent needs, so for this reason, testability is a major concern. Most of the code is heavily tested, along with [Travis](https://travis-ci.org/bresan/entity_embeddings_categorical) as Continuous Integration tool to run all the unit tests once there is a new commit.
+This project is inteded to suit most of the existent needs, so for this reason, testability is a major concern. Most of the code is heavily tested, along with [Travis](https://travis-ci.org/bresan/entity_embeddings_categorical) as Continuous Integration tool to run all the unit tests once there is a new commit.
 
 To-Do:
 

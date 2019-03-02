@@ -1,0 +1,2 @@
+def lul():
+    print('lul')
