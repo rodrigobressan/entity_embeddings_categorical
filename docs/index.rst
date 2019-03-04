@@ -6,7 +6,8 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   page
+   about
+   getting_started
    modules
 
 
