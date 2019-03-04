@@ -7,3 +7,4 @@ This page contains the list of project's modules
    :toctree: _autosummary
 
    entity_embeddings.config
+   entity_embeddings.embedder
