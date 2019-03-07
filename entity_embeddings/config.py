@@ -19,7 +19,11 @@ def get_embedding_size(unique_values: int) -> int:
     :param unique_values: the number of unique values in the given category
     :return:
     """
-    return int(min(np.ceil(unique_values / 2), 50))
+    size = int(min(np.ceil(unique_values / 2), 50))
+    if size < 2:
+        return 2
+    else:
+        return size
 
 
 def generate_categories_from_df(df: pd.DataFrame, target_name: str):
@@ -58,18 +62,18 @@ class Config:
                  epochs: int = 10,
                  batch_size: int = 128,
                  verbose: bool = False,
-                 weights_output: str = 'weights_embeddings.pickle'):
+                 artifacts_path: str = 'artifacts'):
         # input validations
         check_csv_data(csv_path)
         check_target_name(target_name)
         check_train_ratio(train_ratio)
         check_epochs(epochs)
         check_batch_size(batch_size)
-        check_weights_output(weights_output)
+
+        # TODO check labels output
 
         check_target_processor(target_processor)
         check_model_assembler(model_assembler)
-        # TODO check processor and assembler
 
         self.csv_path = csv_path
         self.target_name = target_name
@@ -77,7 +81,8 @@ class Config:
         self.epochs = epochs
         self.batch_size = batch_size
         self.verbose = verbose
-        self.weights_output = weights_output
+        self.artifacts_path = artifacts_path
+
         self.target_processor = target_processor
         self.model_assembler = model_assembler
 
@@ -97,7 +102,7 @@ class Config:
                             epochs: int = 10,
                             batch_size: int = 128,
                             verbose: bool = False,
-                            weights_output: str = 'weights_embeddings.pickle'):
+                            artifacts_path: str = 'artifacts'):
         df = load_guarantee_not_empty(csv_path)
         check_target_existent_in_df(target_name, df)
         n_unique_classes = df[target_name].nunique()
@@ -113,7 +118,7 @@ class Config:
                    epochs,
                    batch_size,
                    verbose,
-                   weights_output)
+                   artifacts_path)
 
     @classmethod
     def make_custom_config(cls,
@@ -125,7 +130,7 @@ class Config:
                            epochs: int = 10,
                            batch_size: int = 128,
                            verbose: bool = False,
-                           weights_output: str = 'weights_embeddings.pickle'):
+                           artifacts_path: str = 'artifacts'):
         return cls(csv_path,
                    target_name,
                    train_ratio,
@@ -134,4 +139,13 @@ class Config:
                    epochs,
                    batch_size,
                    verbose,
-                   weights_output)
+                   artifacts_path)
+
+    def get_weights_path(self):
+        return os.path.join(self.artifacts_path, 'weights.pickle')
+
+    def get_labels_path(self):
+        return os.path.join(self.artifacts_path, 'labels.pickle')
+
+    def get_visualizations_dir(self):
+        return os.path.join(self.artifacts_path, 'visualizations')
