@@ -12,10 +12,10 @@ def main():
                                         verbose=True,
                                         artifacts_path='artifacts')
 
-    embedder = Embedder(config)
-    embedder.perform_embedding()
+    # embedder = Embedder(config)
+    # embedder.perform_embedding()
 
-    visualization_utils.make_visualizations_from_config(config)
+    visualization_utils.make_visualizations_from_config(config, format='png')
 
 
 if __name__ == '__main__':

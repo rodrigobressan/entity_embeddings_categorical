@@ -12,13 +12,14 @@ from sklearn.preprocessing import LabelEncoder
 from entity_embeddings import Config
 
 TITLE_FORMAT = 'Weights for %s'
-FILENAME_FORMAT = '%s_embedding.pdf'
+FILENAME_FORMAT = '%s_embedding.%s'
 
 
 def make_visualizations(labels: List[LabelEncoder],
                         embeddings: List[np.array],
                         df: pandas.DataFrame,
-                        output_path: str = None):
+                        output_path: str = None,
+                        format: str = 'pdf'):
     figures = []
     for index in range(df.shape[1] - 1):
         column = df.columns[index]
@@ -39,19 +40,20 @@ def make_visualizations(labels: List[LabelEncoder],
 
             if output_path:
                 os.makedirs(output_path, exist_ok=True)
-                plt.savefig(os.path.join(output_path, FILENAME_FORMAT % column))
+                plt.savefig(os.path.join(output_path, FILENAME_FORMAT % (column, format)))
 
     return figures
 
 
-def make_visualizations_from_config(config: Config) -> List[Figure]:
+def make_visualizations_from_config(config: Config,
+                                    format: str = 'pdf') -> List[Figure]:
     with open(config.get_labels_path(), 'rb') as f:
         labels = pickle.load(f)
 
     with open(config.get_weights_path(), 'rb') as f:
         embeddings = pickle.load(f)
 
-    return make_visualizations(labels, embeddings, config.df, config.get_visualizations_dir())
+    return make_visualizations(labels, embeddings, config.df, config.get_visualizations_dir(), format)
 
 
 def is_not_single_embedding(label: LabelEncoder):

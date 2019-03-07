@@ -264,7 +264,4 @@ fabric.properties
 
 .idea
 
-example/default/artifacts/
-example/custom/artifacts/
-
 *.pdf

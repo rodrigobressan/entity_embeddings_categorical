@@ -52,7 +52,11 @@ A working example of custom configuration mode can be found [here](https://githu
 
 ## Visualization
 
-To-DO;
+Once you are done with the training of your model, you can use the module [visualization_utils](https://github.com/bresan/entity_embeddings_categorical/blob/master/entity_embeddings/util/visualization_utils.py) in order to create some visualizations from the generated weights.
+
+Below are some examples created for the [Rossmann dataset](https://www.kaggle.com/c/rossmann-store-sales):
+
+
 
 # Documentation
 
