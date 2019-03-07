@@ -1,4 +1,5 @@
-from typing import Tuple
+import os
+from typing import Tuple, List
 
 import numpy as np
 
@@ -12,11 +13,11 @@ class Embedder():
         self.config = config
         self.network = EmbeddingNetwork(config)
 
-    def prepare_data(self, config: Config) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    def prepare_data(self, config: Config) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, List]:
         X, y = preprocessing_utils.get_X_y(config.df, config.target_name)
 
         # pre processing of X and Y
-        X = preprocessing_utils.label_encode(X)
+        X, labels = preprocessing_utils.label_encode(X)
         y = np.array(y)
 
         num_records = len(X)
@@ -32,10 +33,15 @@ class Embedder():
         y_train = config.target_processor.process_target(y_train.tolist())
         y_val = config.target_processor.process_target(y_val.tolist())
 
-        return X_train, X_val, y_train, y_val
+        return X_train, X_val, y_train, y_val, labels
 
     def perform_embedding(self) -> None:
-        self.X_train, self.X_val, self.y_train, self.y_val = self.prepare_data(self.config)
+        self.X_train, self.X_val, self.y_train, self.y_val, self.labels = self.prepare_data(self.config)
         self.network.fit(self.X_train, self.y_train, self.X_val, self.y_val)
 
-        model_utils.save_weights(self.network.model, self.config)
+        if not os.path.exists(self.config.artifacts_path):
+            os.makedirs(self.config.artifacts_path, exist_ok=True)
+
+        weights = model_utils.get_weights(self.network.model, self.config)
+        model_utils.save_weights(weights, self.config)
+        model_utils.save_labels(self.labels, self.config)

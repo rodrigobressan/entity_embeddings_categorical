@@ -49,13 +49,16 @@ def label_encode(data: List) -> np.ndarray:
     :param data: the list containing the items to be encoded
     :return: the encoded np.ndarray
     """
+    labels_encoded = []
     data_encoded = np.array(data)
     for i in range(data_encoded.shape[1]):
         le = preprocessing.LabelEncoder()
         le.fit(data_encoded[:, i])
+        labels_encoded.append(le)
         data_encoded[:, i] = le.transform(data_encoded[:, i])
+
     data_encoded = data_encoded.astype(int)
-    return data_encoded
+    return data_encoded, labels_encoded
 
 
 def transpose_to_list(X: np.ndarray) -> List[np.ndarray]:

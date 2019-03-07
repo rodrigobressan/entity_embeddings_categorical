@@ -1,19 +1,27 @@
+from random import shuffle
+
+import pandas
+
 from entity_embeddings import Config, Embedder, TargetType
+from entity_embeddings.util import visualization_utils
 
 
 def main():
-    data_path = "../rossmann.csv"
+    data_path = "../ross_short.csv"
     config = Config.make_default_config(csv_path=data_path,
                                         target_name='Sales',
                                         target_type=TargetType.REGRESSION,
                                         train_ratio=0.9,
-                                        epochs=10,
+                                        epochs=1,
                                         verbose=True,
-                                        weights_output='weights.pickle')
+                                        artifacts_path='artifacts')
 
-    print(config)
     # embedder = Embedder(config)
     # embedder.perform_embedding()
+
+    figs = visualization_utils.make_visualizations(config)
+    print('done')
+
 
 
 if __name__ == '__main__':
