@@ -3,6 +3,7 @@ from typing import List, Tuple
 import numpy as np
 import pandas as pd
 from sklearn import preprocessing
+from sklearn.preprocessing import LabelEncoder
 
 
 def series_to_list(series: pd.Series) -> List:
@@ -16,7 +17,6 @@ def series_to_list(series: pd.Series) -> List:
         list_cols.append(item)
 
     return list_cols
-
 
 def sample(X: np.ndarray, y: np.ndarray, n: int) -> Tuple[np.ndarray, np.ndarray]:
     num_row = X.shape[0]
@@ -43,7 +43,7 @@ def get_X_y(df: pd.DataFrame, name_target: str) -> Tuple[List, List]:
     return X_list, y_list
 
 
-def label_encode(data: List) -> np.ndarray:
+def label_encode(data: List) -> [np.ndarray, List[LabelEncoder]]:
     """
     This method is used to perform Label Encoding on a given list
     :param data: the list containing the items to be encoded

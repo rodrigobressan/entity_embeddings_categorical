@@ -6,14 +6,11 @@ from keras.engine import Layer
 from keras.optimizers import Optimizer
 
 from entity_embeddings.config import Config
+from entity_embeddings.network import ModelAssembler
 from entity_embeddings.processor.target_type import TargetType
 from entity_embeddings.util.dataframe_utils import create_random_csv, remove_random_csv
 
-
 class TestAssembler(unittest.TestCase):
-    def tearDown(self):
-        remove_random_csv()
-
     def make_config_for_type(self, type: TargetType):
         csv_path = create_random_csv(5, 5, 'ABCDE')
         config = Config.make_default_config(csv_path=csv_path,
@@ -38,6 +35,8 @@ class TestAssembler(unittest.TestCase):
                                     outputs=1,
                                     operation='dense')
 
+        remove_random_csv()
+
     def test_activation_for_multiclass_is_softmax(self):
         config = self.make_config_for_type(TargetType.MULTICLASS_CLASSIFICATION)
         previous_layer = self.make_sample_layer()
@@ -47,6 +46,7 @@ class TestAssembler(unittest.TestCase):
                                     activation="Softmax",
                                     outputs=config.unique_classes,
                                     operation='dense')
+        remove_random_csv()
 
     def test_activation_for_regression_is_identity(self):
         config = self.make_config_for_type(TargetType.REGRESSION)
@@ -57,6 +57,8 @@ class TestAssembler(unittest.TestCase):
                                     activation="Identity",
                                     outputs=1,
                                     operation='dense')
+
+        remove_random_csv()
 
     def test_model_params_for_binary_classification(self):
         config = self.make_config_for_type(TargetType.BINARY_CLASSIFICATION)
@@ -71,6 +73,8 @@ class TestAssembler(unittest.TestCase):
                                     loss="binary_crossentropy",
                                     metrics=["accuracy"])
 
+        remove_random_csv()
+
     def test_model_params_for_multiclass_classification(self):
         config = self.make_config_for_type(TargetType.MULTICLASS_CLASSIFICATION)
         previous_layer = self.make_sample_layer()
@@ -84,6 +88,8 @@ class TestAssembler(unittest.TestCase):
                                     loss="categorical_crossentropy",
                                     metrics=[])
 
+        remove_random_csv()
+
     def test_model_params_for_regression_classification(self):
         config = self.make_config_for_type(TargetType.REGRESSION)
         previous_layer = self.make_sample_layer()
@@ -96,6 +102,8 @@ class TestAssembler(unittest.TestCase):
                                     optimizer=keras.optimizers.Adam,
                                     loss="mse",
                                     metrics=[])
+
+        remove_random_csv()
 
     def check_model_parameters(self, model: Model, optimizer: Optimizer, loss: str, metrics) -> None:
         self.assertIsInstance(model.optimizer, optimizer)

@@ -3,7 +3,7 @@ import unittest
 import numpy as np
 
 from entity_embeddings.util import dataframe_utils
-from entity_embeddings.util.preprocessing_utils import transpose_to_list, series_to_list, get_X_y
+from entity_embeddings.util.preprocessing_utils import transpose_to_list, series_to_list, get_X_y, label_encode
 
 
 class TestPreprocessingUtils(unittest.TestCase):
@@ -21,6 +21,16 @@ class TestPreprocessingUtils(unittest.TestCase):
         for row in df.iterrows():
             output_list = series_to_list(row)
             self.assertListEqual(row[1].values.tolist(), output_list[1].values.tolist())
+
+    def test_label_encode(self):
+        data = [[1], [0], [1], [0], [1]]
+        data_encoded, labels = label_encode(data)
+
+        for index in range(data_encoded.shape[0]):
+            self.assertEqual(data_encoded[index][0], data[index][0])
+
+        self.assertEqual(labels[0].classes_[0], 0)
+        self.assertEqual(labels[0].classes_[1], 1)
 
     def test_get_X_y(self):
         df = dataframe_utils.create_random_dataframe(rows=5, cols=5, columns='ABCDE')

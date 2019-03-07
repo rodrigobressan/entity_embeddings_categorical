@@ -1,7 +1,3 @@
-from random import shuffle
-
-import pandas
-
 from entity_embeddings import Config, Embedder, TargetType
 from entity_embeddings.util import visualization_utils
 
@@ -16,12 +12,10 @@ def main():
                                         verbose=True,
                                         artifacts_path='artifacts')
 
-    # embedder = Embedder(config)
+    embedder = Embedder(config)
     # embedder.perform_embedding()
 
-    figs = visualization_utils.make_visualizations(config)
-    print('done')
-
+    visualization_utils.make_visualizations_from_config(config)
 
 
 if __name__ == '__main__':

@@ -9,6 +9,7 @@ from sklearn.preprocessing import MinMaxScaler
 from entity_embeddings import Config, Embedder
 from entity_embeddings.network import ModelAssembler
 from entity_embeddings.processor import TargetProcessor
+from entity_embeddings.util import visualization_utils
 
 
 class CustomProcessor(TargetProcessor):
@@ -44,18 +45,20 @@ def main():
     custom_processor = CustomProcessor()
     custom_assembler = CustomAssembler()
 
-    data_path = "../rossmann.csv"
+    data_path = "../ross_short.csv"
     config = Config.make_custom_config(csv_path=data_path,
                                        target_name='Sales',
                                        train_ratio=0.9,
                                        target_processor=custom_processor,
                                        model_assembler=custom_assembler,
-                                       epochs=10,
+                                       epochs=1,
                                        verbose=True,
-                                       weights_output='weights.pickle')
+                                       artifacts_path='artifacts')
 
     embedder = Embedder(config)
     embedder.perform_embedding()
+
+    visualization_utils.make_visualizations_from_config(config)
 
 
 if __name__ == '__main__':
