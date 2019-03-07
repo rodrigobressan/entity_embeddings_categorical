@@ -27,10 +27,6 @@ class TestEmbedder(unittest.TestCase):
     def tearDown(self):
         remove_random_csv()
 
-    def test_call_prepare_data_on_perform_embedding(self):
-        self.embedder.perform_embedding()
-        self.assertTrue(self.embedder.prepare_data.called)
-
 
     def test_make_artifact_dir_when_not_existent(self):
         self.config.artifacts_path = 'not_existent_path'

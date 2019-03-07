@@ -262,6 +262,4 @@ fabric.properties
 
 *.pickle
 
-*.csv
-
 .idea

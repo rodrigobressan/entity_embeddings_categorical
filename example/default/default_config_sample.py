@@ -13,7 +13,7 @@ def main():
                                         artifacts_path='artifacts')
 
     embedder = Embedder(config)
-    # embedder.perform_embedding()
+    embedder.perform_embedding()
 
     visualization_utils.make_visualizations_from_config(config)
 

@@ -15,9 +15,9 @@ from entity_embeddings.util.validation_utils import *
 
 def get_embedding_size(unique_values: int) -> int:
     """
-    This method is used to generate the embedding size to be used on our Embedding layer
+    Return the embedding size to be used on the Embedding layer
     :param unique_values: the number of unique values in the given category
-    :return:
+    :return: the size to be used on the embedding layer
     """
     size = int(min(np.ceil(unique_values / 2), 50))
     if size < 2:
@@ -26,7 +26,13 @@ def get_embedding_size(unique_values: int) -> int:
         return size
 
 
-def generate_categories_from_df(df: pd.DataFrame, target_name: str):
+def generate_categories_from_df(df: pd.DataFrame, target_name: str) -> List:
+    """
+    Returns a list of the categories from a given pandas DataFrame, with the exception of the provided target name
+    :param df: the DataFrame
+    :param target_name: the name of the target column to not be included
+    :return: a List of Category with the df columns except the provided one
+    """
     category_list = []
 
     for category in df:
@@ -38,7 +44,8 @@ def generate_categories_from_df(df: pd.DataFrame, target_name: str):
 
 class Category:
     """
-    This class is used to store data related to the used category, such as the embedding size to be used
+    Used to store fields related to a given category, such as its name, count of unique values and the size of each
+    embedding layer
     """
 
     def __init__(self, alias: str, unique_values: int):
@@ -49,7 +56,7 @@ class Category:
 
 class Config:
     """
-    This class is used to store all the configuration (dataframes, target type, epochs, artifacts..) which will be
+    Used to store all the configuration (dataframes, target type, epochs, artifacts..) which will be
     used on our Embeddings Network
     """
 
@@ -69,8 +76,6 @@ class Config:
         check_train_ratio(train_ratio)
         check_epochs(epochs)
         check_batch_size(batch_size)
-
-        # TODO check labels output
 
         check_target_processor(target_processor)
         check_model_assembler(model_assembler)
@@ -93,6 +98,11 @@ class Config:
 
         self.categories: List[Category] = generate_categories_from_df(self.df, self.target_name)
 
+        # artifacts related fields
+        self.DEFAULT_WEIGHTS_FILENAME = 'weights.pickle'
+        self.DEFAULT_LABELS_FILENAME = 'labels.pickle'
+        self.DEFAULT_PATH_VISUALIZATIONS = 'visualizations'
+
     @classmethod
     def make_default_config(cls,
                             csv_path: str,
@@ -103,6 +113,19 @@ class Config:
                             batch_size: int = 128,
                             verbose: bool = False,
                             artifacts_path: str = 'artifacts'):
+        """
+        Used to create a default Config object.
+
+        :param csv_path: where the csv containing both the features and target is located
+        :param target_name: the name of the target/output variable
+        :param target_type: the TargetType to be used (BINARY, REGRESSION, MULTICLASS)
+        :param train_ratio: the proportion to be used for the training subset
+        :param epochs: how many epochs should the model be trained
+        :param batch_size: the size of the batch size
+        :param verbose: if logs should be outputted or not
+        :param artifacts_path: where the artifacts (weights, labels, visualizations) should be stored
+        :return: a Config object
+        """
         df = load_guarantee_not_empty(csv_path)
         check_target_existent_in_df(target_name, df)
         n_unique_classes = df[target_name].nunique()
@@ -131,6 +154,21 @@ class Config:
                            batch_size: int = 128,
                            verbose: bool = False,
                            artifacts_path: str = 'artifacts'):
+        """
+        Used to create a custom Config object. Mostly should be used when you want to have a custom TargetProcessor
+        and/or a custom ModelAssembler.
+
+        :param csv_path: where the csv containing both the features and target is located
+        :param target_name: the name of the target/output variable
+        :param train_ratio: the proportion to be used for the training subset
+        :param target_processor: the TargetProcessor to be used
+        :param model_assembler: the ModelAssembler to be used
+        :param epochs: how many epochs should the model be trained
+        :param batch_size: the size of the batch size
+        :param verbose: if logs should be outputted or not
+        :param artifacts_path: where the artifacts (weights, labels, visualizations) should be stored
+        :return: a Config object
+        """
         return cls(csv_path,
                    target_name,
                    train_ratio,
@@ -142,10 +180,22 @@ class Config:
                    artifacts_path)
 
     def get_weights_path(self):
-        return os.path.join(self.artifacts_path, 'weights.pickle')
+        """
+        Used to return the path of the stored weights
+        :return: the pah of the stored weights on disk
+        """
+        return os.path.join(self.artifacts_path, self.DEFAULT_WEIGHTS_FILENAME)
 
     def get_labels_path(self):
-        return os.path.join(self.artifacts_path, 'labels.pickle')
+        """
+        Used to return the path of the stored labels
+        :return: the pah of the stored labels on disk
+        """
+        return os.path.join(self.artifacts_path, self.DEFAULT_LABELS_FILENAME)
 
     def get_visualizations_dir(self):
-        return os.path.join(self.artifacts_path, 'visualizations')
+        """
+        Used to return the path of the stored visualizations
+        :return: the pah of the stored visualizations on disk
+        """
+        return os.path.join(self.artifacts_path, self.DEFAULT_PATH_VISUALIZATIONS)

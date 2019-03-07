@@ -8,20 +8,32 @@ from entity_embeddings.network.network import EmbeddingNetwork
 from entity_embeddings.util import model_utils, preprocessing_utils
 
 
-class Embedder():
+class Embedder:
+    """
+    This class should be used to perform the entity embedding on our Neural Network. For initializing it, you should
+    provide a valid Config object.
+    """
+
     def __init__(self, config: Config):
         self.config = config
         self.network = EmbeddingNetwork(config)
+        self.X_train, self.X_val, self.y_train, self.y_val, self.labels = self.prepare_data()
 
-    def prepare_data(self, config: Config) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, List]:
-        X, y = preprocessing_utils.get_X_y(config.df, config.target_name)
+    def prepare_data(self) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, List]:
+        """
+        This method is used to perform all the required pre-processing steps on the provided set of features and the
+        targets, such as label encoding and sampling.
+        :return: a tuple containing 5 different elements in the following order: X_train, X_val, y_train, y_val and the
+        encoded labels
+        """
+        X, y = preprocessing_utils.get_X_y(self.config.df, self.config.target_name)
 
         # pre processing of X and Y
         X, labels = preprocessing_utils.label_encode(X)
         y = np.array(y)
 
         num_records = len(X)
-        train_size = int(config.train_ratio * num_records)
+        train_size = int(self.config.train_ratio * num_records)
 
         X_train = X[:train_size]
         X_val = X[train_size:]
@@ -30,13 +42,17 @@ class Embedder():
 
         X_train, y_train = preprocessing_utils.sample(X_train, y_train, 1000)  # Simulate data sparsity
 
-        y_train = config.target_processor.process_target(y_train.tolist())
-        y_val = config.target_processor.process_target(y_val.tolist())
+        y_train = self.config.target_processor.process_target(y_train.tolist())
+        y_val = self.config.target_processor.process_target(y_val.tolist())
 
         return X_train, X_val, y_train, y_val, labels
 
     def perform_embedding(self) -> None:
-        self.X_train, self.X_val, self.y_train, self.y_val, self.labels = self.prepare_data(self.config)
+        """
+        This method is the main method in our Embedded class, being responsible to prepare our data and then feed our
+        Entity Embedding Network, as well as to save the weights into the disk.
+        """
+
         self.network.fit(self.X_train, self.y_train, self.X_val, self.y_val)
 
         if not os.path.exists(self.config.artifacts_path):

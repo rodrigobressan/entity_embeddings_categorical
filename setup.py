@@ -17,7 +17,7 @@ def read_file(*file_name: str) -> str:
 
 setup(
     name='entity_embeddings_categorical',
-    version='0.5',
+    version='0.6',
     license='BSD-3-Clause',
     url='https://github.com/bresan/entity_embeddings_categorical',
     description='',
@@ -26,8 +26,6 @@ setup(
     author='Rodrigo Bresan',
     author_email='',
     classifiers=[
-        'Development Status :: 3 - Alpha',
-        'License :: OSI Approved :: BSD License',
         'Programming Language :: Python :: 3.6',
     ],
     packages=find_packages(),
