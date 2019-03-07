@@ -263,3 +263,8 @@ fabric.properties
 *.pickle
 
 .idea
+
+example/default/artifacts/
+example/custom/artifacts/
+
+*.pdf
