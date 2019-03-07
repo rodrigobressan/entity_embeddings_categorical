@@ -17,7 +17,7 @@ def read_file(*file_name: str) -> str:
 
 setup(
     name='entity_embeddings_categorical',
-    version='0.6.1',
+    version='0.6.2',
     license='BSD-3-Clause',
     url='https://github.com/bresan/entity_embeddings_categorical',
     description='',
@@ -29,10 +29,5 @@ setup(
         'Programming Language :: Python :: 3.6',
     ],
     packages=find_packages(),
-    entry_points={
-        'console_scripts': [
-            'hello = app.__main__:main',
-        ]
-    },
     install_requires=read_file('requirements.txt')
 )
