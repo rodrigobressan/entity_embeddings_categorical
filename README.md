@@ -66,3 +66,10 @@ Below are some examples created for the [Rossmann dataset](https://www.kaggle.co
 
 ![Weights for store id embedding](https://raw.githubusercontent.com/bresan/entity_embeddings_categorical/master/example/default/artifacts/visualizations/Store_embedding.png)
 
+# Troubleshooting
+
+In case of any issue with the project, or for further questions, do not hesitate to open an issue here on GitHub.
+
+# Contributions
+
+Contributions are really welcome, so feel free to open a pull request :-)
