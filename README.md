@@ -15,6 +15,14 @@ The installation is pretty simple if you have a virtualenv already installed on 
 pip install entity-embeddings-categorical
 ```
 
+# Documentation
+
+Besides the docstrings, major details about the documentation can be found at https://readthedocs.org/projects/entity-embeddings-categorical/.
+
+# Testing
+
+This project is inteded to suit most of the existent needs, so for this reason, testability is a major concern. Most of the code is heavily tested, along with [Travis](https://travis-ci.org/bresan/entity_embeddings_categorical) as Continuous Integration tool to run all the unit tests once there is a new commit.
+
 # Usage
 
 The usage of this utility library is provided in two modes: default and custom. In the default configuration, you can perform the following operations: Regression, Binary Classification and Multiclass Classification.
@@ -56,18 +64,5 @@ Once you are done with the training of your model, you can use the module [visua
 
 Below are some examples created for the [Rossmann dataset](https://www.kaggle.com/c/rossmann-store-sales):
 
+![Weights for store id embedding](https://raw.githubusercontent.com/bresan/entity_embeddings_categorical/master/example/default/artifacts/visualizations/Store_embedding.png)
 
-
-# Documentation
-
-
-
-# Testing
-
-This project is inteded to suit most of the existent needs, so for this reason, testability is a major concern. Most of the code is heavily tested, along with [Travis](https://travis-ci.org/bresan/entity_embeddings_categorical) as Continuous Integration tool to run all the unit tests once there is a new commit.
-
-To-Do:
-
-- Notebok sample;
-- Visualization;
-- Draw CNN;
