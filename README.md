@@ -17,7 +17,7 @@ pip install entity-embeddings-categorical
 
 # Documentation
 
-Besides the docstrings, major details about the documentation can be found at https://readthedocs.org/projects/entity-embeddings-categorical/.
+Besides the docstrings, major details about the documentation can be found at [here](https://entity-embeddings-categorical.readthedocs.io/en/latest/).
 
 # Testing
 
