@@ -92,6 +92,7 @@ language = None
 # directories to ignore when looking for source files.
 exclude_patterns = ['_build']
 
+pygments_style = 'sphinx'
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
 # default_role = None
@@ -108,7 +109,6 @@ exclude_patterns = ['_build']
 # show_authors = False
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'sphinx'
 
 # A list of ignored prefixes for module index sorting.
 # modindex_common_prefix = []

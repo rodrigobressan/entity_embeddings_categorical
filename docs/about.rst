@@ -5,10 +5,10 @@ About the Project
 Entity Embeddings
 ------------------
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum mollis odio eu rutrum.
-Quisque sit amet risus turpis. Sed nibh tortor, egestas vel fermentum sed, aliquet a quam.
-Integer accumsan metus justo, quis volutpat lacus porttitor quis. Phasellus pretium nibh at quam ultrices,
-sed convallis velit vulputate. Curabitur eros elit, aliquam quis est et, bibendum luctus arcu.
-Vestibulum pretium porta luctus. Nullam vulputate felis nibh, vitae elementum urna vulputate quis.
-Mauris pulvinar rhoncus suscipit. Nam non lacus quis lacus semper euismod. Cras sit amet faucibus dolor.
-Nunc id odio mi. Nulla ipsum massa, malesuada sit amet luctus vel, mollis ut ante.
+This project is aimed to serve as an utility tool for the preprocessing, training and extraction of entity embeddings through Neural Networks using the Keras framework. It's still under construction, so please use it carefully.
+
+GitHub Link: https://github.com/bresan/entity_embeddings_categorical/
+
+Travis CI Build: https://travis-ci.org/bresan/entity_embeddings_categorical
+
+Coverall: https://coveralls.io/github/bresan/entity_embeddings_categorical
