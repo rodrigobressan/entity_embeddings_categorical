@@ -11,9 +11,7 @@ This project is aimed to serve as an utility tool for the preprocessing, trainin
 
 The installation is pretty simple if you have a virtualenv already installed on your machine. If you don't please rely to [VirtualEnv official documentation](https://virtualenv.pypa.io/en/latest/).
 
-```bash
-pip install entity-embeddings-categorical
-```
+![Installation](https://github.com/bresan/entity_embeddings_categorical/blob/master/docs/figs/install_default.png)
 
 # Documentation
 
@@ -36,16 +34,7 @@ The usage of the default mode is pretty straightforward, you just need to provid
 
 So for creating a simple embedding network that reads from file **sales_last_semester.csv**, where the target name is **total_sales**, with the desired output being a **binary classification** and with a training ratio of **0.9**, our Python script would look like this:
 
-```python
-    config = Config.make_default_config(csv_path='sales_last_semester.csv',
-                                        target_name='total_sales',
-                                        target_type=TargetType.BINARY_CLASSIFICATION,
-                                        train_ratio=0.9)
-
-
-    embedder = Embedder(config)
-    embedder.perform_embedding()
-```
+![Default configuration example](https://github.com/bresan/entity_embeddings_categorical/blob/master/docs/figs/embedding_default.png)
 
 Pretty simple, huh?
 
@@ -60,7 +49,7 @@ A working example of custom configuration mode can be found [here](https://githu
 
 ## Visualization
 
-Once you are done with the training of your model, you can use the module [visualization_utils](https://github.com/bresan/entity_embeddings_categorical/blob/master/entity_embeddings/util/visualization_utils.py) in order to create some visualizations from the generated weights.
+Once you are done with the training of your model, you can use the module [visualization_utils](https://github.com/bresan/entity_embeddings_categorical/blob/master/entity_embeddings/util/visualization_utils.py) in order to create some visualizations from the generated weights as well as the accuraccy of your model.
 
 Below are some examples created for the [Rossmann dataset](https://www.kaggle.com/c/rossmann-store-sales):
 
