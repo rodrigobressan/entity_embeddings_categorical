@@ -11,7 +11,9 @@ This project is aimed to serve as an utility tool for the preprocessing, trainin
 
 The installation is pretty simple if you have a virtualenv already installed on your machine. If you don't please rely to [VirtualEnv official documentation](https://virtualenv.pypa.io/en/latest/).
 
-![Installation](https://github.com/bresan/entity_embeddings_categorical/blob/master/docs/figs/install_default.png)
+```bash
+pip install entity-embeddings-categorical
+```
 
 # Documentation
 
@@ -34,7 +36,16 @@ The usage of the default mode is pretty straightforward, you just need to provid
 
 So for creating a simple embedding network that reads from file **sales_last_semester.csv**, where the target name is **total_sales**, with the desired output being a **binary classification** and with a training ratio of **0.9**, our Python script would look like this:
 
-![Default configuration example](https://github.com/bresan/entity_embeddings_categorical/blob/master/docs/figs/embedding_default.png)
+```python
+    config = Config.make_default_config(csv_path='sales_last_semester.csv',
+                                        target_name='total_sales',
+                                        target_type=TargetType.BINARY_CLASSIFICATION,
+                                        train_ratio=0.9)
+
+
+    embedder = Embedder(config)
+    embedder.perform_embedding()
+```
 
 Pretty simple, huh?
 
