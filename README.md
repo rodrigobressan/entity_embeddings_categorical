@@ -1,7 +1,8 @@
-[![PyPI version](https://badge.fury.io/py/entity-embeddings-categorical.svg)](https://badge.fury.io/py/entity-embeddings-categorical)
+[![PyPI version](https://badge.fury.io/py/entity-embeddings-categorical)](https://pypi.org/project/entity-embeddings-categorical)
 [![Build Status](https://travis-ci.org/bresan/entity_embeddings_categorical.svg?branch=master)](https://travis-ci.org/bresan/entity_embeddings_categorical)
 [![Coverage Status](https://coveralls.io/repos/github/bresan/entity_embeddings_categorical/badge.svg?branch=master)](https://coveralls.io/github/bresan/entity_embeddings_categorical?branch=master)
-![GitHub](https://img.shields.io/github/license/bresan/entity_embeddings_categorical.svg)
+[![GitHub](https://img.shields.io/github/license/bresan/entity_embeddings_categorical.svg)](https://github.com/bresan/entity_embeddings_categorical/blob/master/LICENSE.md)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/e02bc243822c4ce884c4adf87ff6e9f7)](https://www.codacy.com/app/bresan/entity_embeddings_categorical?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=bresan/entity_embeddings_categorical&amp;utm_campaign=Badge_Grade)
 
 # Overview
 
