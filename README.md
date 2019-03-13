@@ -1,3 +1,4 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/afe42a511e6f478eb75c253b4195776b)](https://app.codacy.com/app/bresan/entity_embeddings_categorical?utm_source=github.com&utm_medium=referral&utm_content=bresan/entity_embeddings_categorical&utm_campaign=Badge_Grade_Dashboard)
 [![PyPI version](https://badge.fury.io/py/entity-embeddings-categorical.svg)](https://badge.fury.io/py/entity-embeddings-categorical)
 [![Build Status](https://travis-ci.org/bresan/entity_embeddings_categorical.svg?branch=master)](https://travis-ci.org/bresan/entity_embeddings_categorical)
 [![Coverage Status](https://coveralls.io/repos/github/bresan/entity_embeddings_categorical/badge.svg?branch=master)](https://coveralls.io/github/bresan/entity_embeddings_categorical?branch=master)
