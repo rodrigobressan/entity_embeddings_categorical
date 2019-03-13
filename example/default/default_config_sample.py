@@ -8,14 +8,14 @@ def main():
                                         target_name='Sales',
                                         target_type=TargetType.REGRESSION,
                                         train_ratio=0.9,
-                                        epochs=1,
+                                        epochs=20,
                                         verbose=True,
                                         artifacts_path='artifacts')
 
-    # embedder = Embedder(config)
-    # embedder.perform_embedding()
+    embedder = Embedder(config)
+    embedder.perform_embedding()
 
-    visualization_utils.make_visualizations_from_config(config, format='png')
+    visualization_utils.make_visualizations_from_config(config, extension='png')
 
 
 if __name__ == '__main__':

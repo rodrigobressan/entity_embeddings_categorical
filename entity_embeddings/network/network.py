@@ -6,9 +6,9 @@ from typing import Tuple, List
 
 import numpy as np
 from keras import Input
+from keras.callbacks import History
 from keras.engine import Layer
-from keras.layers import Concatenate, Embedding, Reshape
-from keras.layers import Dense, Activation
+from keras.layers import Embedding, Reshape
 from keras.models import Model as KerasModel
 
 from entity_embeddings.config import Config
@@ -41,7 +41,6 @@ class EmbeddingNetwork:
         model = self.config.model_assembler.compile_model(model)
         return model
 
-
     def _make_embedding_layers(self) -> Tuple[List[Layer], List[Layer]]:
         """
         This method is used to generate the list of inputs and output layers where our Embedding layers will be placed
@@ -62,16 +61,18 @@ class EmbeddingNetwork:
 
         return embedding_inputs, embedding_outputs
 
-    def fit(self, X_train: np.ndarray, y_train: np.ndarray, X_val: np.ndarray, y_val: np.ndarray) -> None:
+    def fit(self, X_train: np.ndarray, y_train: np.ndarray, X_val: np.ndarray, y_val: np.ndarray) -> History:
         """
         This method is used to fit a given training and validation data into our entity embeddings model
         :param X_train: training features
         :param y_train: training targets
         :param X_val: validation features
         :param y_val: validation targets
+        :return a History object
         """
-        self.model.fit(x=transpose_to_list(X_train),
-                       y=y_train,
-                       validation_data=(transpose_to_list(X_val), y_val),
-                       epochs=self.config.epochs,
-                       batch_size=self.config.batch_size)
+        history = self.model.fit(x=transpose_to_list(X_train),
+                                 y=y_train,
+                                 validation_data=(transpose_to_list(X_val), y_val),
+                                 epochs=self.config.epochs,
+                                 batch_size=self.config.batch_size)
+        return history

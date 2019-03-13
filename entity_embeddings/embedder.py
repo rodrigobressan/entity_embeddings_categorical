@@ -5,7 +5,7 @@ import numpy as np
 
 from entity_embeddings.config import Config
 from entity_embeddings.network.network import EmbeddingNetwork
-from entity_embeddings.util import model_utils, preprocessing_utils
+from entity_embeddings.util import model_utils, preprocessing_utils, visualization_utils
 
 
 class Embedder:
@@ -53,11 +53,15 @@ class Embedder:
         Entity Embedding Network, as well as to save the weights into the disk.
         """
 
-        self.network.fit(self.X_train, self.y_train, self.X_val, self.y_val)
+        history = self.network.fit(self.X_train, self.y_train, self.X_val, self.y_val)
 
         if not os.path.exists(self.config.artifacts_path):
             os.makedirs(self.config.artifacts_path, exist_ok=True)
 
         weights = model_utils.get_weights(self.network.model, self.config)
+
+        # save artifacts
         model_utils.save_weights(weights, self.config)
         model_utils.save_labels(self.labels, self.config)
+
+        visualization_utils.make_plot_from_history(history, self.config.artifacts_path)
