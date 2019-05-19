@@ -63,9 +63,9 @@ class MulticlassClassificationAssembler(ModelAssembler):
 class RegressionClassificationAssembler(ModelAssembler):
     def make_final_layer(self, previous_layer: Layer) -> Layer:
         output_model = Dense(1)(previous_layer)
-        output_model = Activation('linear')(output_model)
+        output_model = Activation('sigmoid')(output_model)
         return output_model
 
     def compile_model(self, model):
-        model.compile(loss='mse', optimizer='adam')
+        model.compile(loss='mean_absolute_error', optimizer='adam')
         return model

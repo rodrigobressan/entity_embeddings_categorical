@@ -70,9 +70,19 @@ class EmbeddingNetwork:
         :param y_val: validation targets
         :return a History object
         """
+
+        self.max_log_y = max(np.max(np.log(y_train)), np.max(np.log(y_val)))
+
         history = self.model.fit(x=transpose_to_list(X_train),
-                                 y=y_train,
-                                 validation_data=(transpose_to_list(X_val), y_val),
+                                 y=self._val_for_fit(y_train),
+                                 validation_data=(transpose_to_list(X_val), self._val_for_fit(y_val)),
                                  epochs=self.config.epochs,
-                                 batch_size=self.config.batch_size)
+                                 batch_size=self.config.batch_size, )
         return history
+
+    def _val_for_fit(self, val):
+        val = np.log(val) / self.max_log_y
+        return val
+
+    def _val_for_pred(self, val):
+        return np.exp(val * self.max_log_y)

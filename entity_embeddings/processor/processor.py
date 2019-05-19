@@ -24,4 +24,5 @@ class MulticlassClassificationProcessor(TargetProcessor):
 
 class RegressionProcessor(TargetProcessor):
     def process_target(self, y: List) -> np.ndarray:
-        return MinMaxScaler().fit_transform(pd.DataFrame(y))
+        return np.array(y)
+        # return MinMaxScaler().fit_transform(pd.DataFrame(y))

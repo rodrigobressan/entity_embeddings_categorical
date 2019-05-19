@@ -3,7 +3,7 @@ from entity_embeddings.util import visualization_utils
 
 
 def main():
-    data_path = "../ross_short.csv"
+    data_path = "../processed_rossmann.csv"
     config = Config.make_default_config(csv_path=data_path,
                                         target_name='Sales',
                                         target_type=TargetType.REGRESSION,

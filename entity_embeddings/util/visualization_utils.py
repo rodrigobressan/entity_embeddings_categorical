@@ -15,6 +15,8 @@ from sklearn import manifold
 from sklearn.preprocessing import LabelEncoder
 
 from entity_embeddings import Config
+from sklearn.decomposition import PCA
+
 
 TITLE_FORMAT = 'Weights for %s'
 SCATTER_EMBEDDINGS_FORMAT = '%s_embedding.%s'
@@ -44,8 +46,9 @@ def make_visualizations(labels: List[LabelEncoder],
             labels_column = labels[index]
             embeddings_column = embeddings[index]
 
-            tsne = manifold.TSNE(init='pca', random_state=0, method='exact')
-            Y = tsne.fit_transform(embeddings_column)
+            # tsne = manifold.TSNE(init='pca', random_state=0, method='exact')
+            pca = PCA(n_components=2)
+            Y = pca.fit_transform(embeddings_column)
 
             fig = plt.figure(figsize=(10, 10))
             figures.append(fig)
