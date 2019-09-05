@@ -74,3 +74,7 @@ In case of any issue with the project, or for further questions, do not hesitate
 # Contributions
 
 Contributions are really welcome, so feel free to open a pull request :-)
+
+# TODO
+
+- Allow to use a Pandas DataFrame instead of the csv file path;
