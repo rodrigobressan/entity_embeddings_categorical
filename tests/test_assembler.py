@@ -48,13 +48,13 @@ class TestAssembler(unittest.TestCase):
                                     operation='dense')
         remove_random_csv()
 
-    def test_activation_for_regression_is_identity(self):
+    def test_activation_for_regression_is_sigmoid(self):
         config = self.make_config_for_type(TargetType.REGRESSION)
         previous_layer = self.make_sample_layer()
 
         layer = config.model_assembler.make_final_layer(previous_layer)
         self.check_layer_properties(layer=layer,
-                                    activation="Identity",
+                                    activation="Sigmoid",
                                     outputs=1,
                                     operation='dense')
 
@@ -100,7 +100,7 @@ class TestAssembler(unittest.TestCase):
         model = config.model_assembler.compile_model(model)
         self.check_model_parameters(model=model,
                                     optimizer=keras.optimizers.Adam,
-                                    loss="mse",
+                                    loss="mean_absolute_error",
                                     metrics=[])
 
         remove_random_csv()
